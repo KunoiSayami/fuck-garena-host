@@ -1,7 +1,7 @@
 /*
  * This source code was published under GPL v3
  *
- * Copyright (C) 2016 Too-Naive E-mail:sometimes.naive@hotmail.com
+ * Copyright (C) 2017 Too-Naive
  *
  */
 
@@ -63,55 +63,6 @@ bool Func_FindProcess(const TCHAR * szProcName,DWORD * lpdwProcessID,DWORD * lpd
 	return false;
 }
 
-/*
-void * Func_FindProcessEx(const TCHAR * szProcName,DWORD * lpdwProcessID,DWORD * lpdwParentProcessID,bool checknext){
-	HANDLE hdProcessList=CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,0);
-	if (szProcName){
-		for (bool _More=Process32First(hdProcessList,&_pe32);_More;_More=Process32Next(hdProcessList,&_pe32)){
-			if (!_tcscmp(szProcName,_pe32.szExeFile)){
-				CloseHandle(hdProcessList);
-				if (!lpdwProcessID && !lpdwParentProcessID)
-					return ((*lpdwProcessID=_pe32.th32ProcessID,*lpdwParentProcessID=_pe32.th32ParentProcessID),(void*)1);
-				else if (lpdwProcessID)
-						return ((*lpdwProcessID=_pe32.th32ProcessID),(void*)1);
-					 else if (lpdwParentProcessID)
-							 return ((*lpdwParentProcessID=_pe32.th32ParentProcessID),(void*)1);
-						  else
-							 return (void*)1; 
-			}
-		}
-		return NULL;
-	}
-	else{
-		if (lpdwProcessID){
-			for (bool _More=Process32First(hdProcessList,&_pe32);_More;_More=Process32Next(hdProcessList,&_pe32)){
-				if (checknext) {
-					checknext=false;
-					continue;
-				}
-				if (*lpdwProcessID==_pe32.th32ProcessID){
-					CloseHandle(hdProcessList);
-					if (lpdwParentProcessID)
-						return ((*lpdwParentProcessID=_pe32.th32ParentProcessID),_pe32.szExeFile);
-					else
-						return _pe32.szExeFile;
-				}
-			}
-			return NULL;
-		}
-		if (lpdwParentProcessID){
-			for (bool _More=Process32First(hdProcessList,&_pe32);_More;_More=Process32Next(hdProcessList,&_pe32)){
-				if (*lpdwParentProcessID==_pe32.th32ParentProcessID){
-					CloseHandle(hdProcessList);
-					return _pe32.szExeFile;
-				}
-			}
-			return NULL;
-		}
-	}
-	return NULL;
-}
-*/
 
 const size_t localbufsize=1024;
 TCHAR buf1[localbufsize],buf2[localbufsize],buf3[localbufsize],szline[localbufsize];
@@ -125,7 +76,7 @@ void Func_Service_Install(){
 	};
 	SC_HANDLE shMang=_pNULL_,shSvc=_pNULL_;
 	_tprintf(_T("    LICENSE:General Public License\n    \
-Copyright (C) 2016 @Too-Naive\n\n"));
+Copyright (C) 2017 @Too-Naive\n\n"));
 	_tprintf(_T("    Bug report:sometimes.naive[at]hotmail.com \n\t       \
 Or open new issue\n------------------------------------------------------\n\n"));
 	try {
@@ -263,7 +214,8 @@ DWORD WINAPI GuardThread(LPVOID){
 			Sleep(5*60000);
 			if (Func_FindProcess(_T("lol.exe")) ||
 				Func_FindProcess(_T("League of Legends.exe")) ||
-				Func_FindProcess(_T("LolClient.exe")))
+				Func_FindProcess(_T("LolClient.exe")) || 
+				Func_FindProcess(_T("LeagueClient.exe")))
 				continue;
 			else{
 				Func_KillProcess(_szProcName);
